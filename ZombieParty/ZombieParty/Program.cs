@@ -1,9 +1,17 @@
+using Microsoft.EntityFrameworkCore;
 using ZombieParty.Models;
+using ZombieParty.Models.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Ce code sert à configurer la connexion entre ton application ZombieParty et ta base de données SQL Server dans le fichier Program.cs.
+//Il permet aussi à ASP.NET Core de créer automatiquement ton ZombiePartyDbContext lorsque ton application en a besoin.
+builder.Services.AddDbContext<ZombiePartyDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Injection des dépendances
 builder.Services.AddSingleton<BaseDonnees>();

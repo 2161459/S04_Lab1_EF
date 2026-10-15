@@ -1,4 +1,7 @@
-﻿<div class="container p-3">
+﻿@model IEnumerable<ZombieParty.Models.Zombie> 
+@* Ajouter ceci *@
+
+<div class="container p-3">
     <div class="row pt-4">
         <div class="col-10">
             <h2 class="text-primary">Zombie</h2>
@@ -11,14 +14,29 @@
     </div>
 
     <div class="row">
-        @foreach (var item in this.ViewBag.MaListe)
+@*         @foreach (var item in this.ViewBag.MaListe)
         {
             <div href="#" class="card  border m-3 text-center bg-warning" style="width: 20rem; background-image: url('/images/imagesLayout/Fond.png'); ">
                 <div class="card-body  text-warning">
                     <h3 class="card-title"> @item.Name </h3>
                     <h5> @item.Point </h5>
                 </div>
+            </div> *@
+
+        @* Enlever le viewBag *@
+       @*  On enlève le ViewBag pour utiliser directement Model, car c’est une méthode plus simple, plus sécuritaire et mieux structurée pour transmettre des données
+        du contrôleur à la vue. Contrairement au ViewBag, Model permet à Visual Studio de reconnaître les types de données et de détecter les erreurs plus 
+        facilement. Cela facilite aussi la maintenance du code. *@
+        @foreach (var item in Model)
+        {
+            <div href="#" class="card border m-3 text-center bg-warning"
+                 style="width: 20rem; background-image: url('/images/imagesLayout/Fond.png');">
+                <div class="card-body text-warning">
+                    <h3 class="card-title">@item.Name</h3>
+                    <h5>@item.Point</h5>
+                </div>
             </div>
+        
         }
     </div>
 </div>

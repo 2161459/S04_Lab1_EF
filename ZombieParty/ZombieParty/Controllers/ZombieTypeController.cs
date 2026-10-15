@@ -1,23 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ZombieParty.Models;
+using ZombieParty.Models.Data;
 using ZombieParty.ViewModels;
 
 namespace ZombieParty.Controllers
 {
     public class ZombieTypeController : Controller
     {
-        private BaseDonnees _baseDonnees { get; set; }
+        //private BaseDonnees _baseDonnees { get; set; }*
+        private ZombiePartyDbContext _baseDonnees { get; set; }
 
-        public ZombieTypeController(BaseDonnees baseDonnees)
+        //public ZombieTypeController(BaseDonnees baseDonnees)*
+        public ZombieTypeController(ZombiePartyDbContext baseDonnees)
         {
             _baseDonnees = baseDonnees;
         }
 
         public IActionResult Index()
         {
-            List<ZombieType> zombieTypesList = _baseDonnees.ZombieTypes.ToList();
+            //List<ZombieType> zombieTypesList = _baseDonnees.ZombieTypes.ToList();*
 
-            return View(zombieTypesList);
+            //return View(zombieTypesList);*
+            List<ZombieType> zombieTypes = _baseDonnees.ZombieTypes.ToList();
+
+            return View(zombieTypes);
         }
 
         public IActionResult Details(int id)
@@ -40,17 +46,20 @@ namespace ZombieParty.Controllers
         //GET CREATE
         public IActionResult Create()
         {
-            return View();
+            //return View();
+            return View(new ZombieType());
         }
 
         //POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Models.ZombieType zombieType)
         {
             if (ModelState.IsValid)
             {
                 // Ajouter à la BD
-                _baseDonnees.ZombieTypes.Add(zombieType);
+                _baseDonnees.ZombieTypes.Add(zombieType); //indique à Entity Framework qu'un nouveau type doit être ajouté.
+                _baseDonnees.SaveChanges(); //exécute les modifications dans SQL Server.
                 TempData["Success"] = $"{zombieType.TypeName} zombie type added";
                 return this.RedirectToAction("Index");
             }
