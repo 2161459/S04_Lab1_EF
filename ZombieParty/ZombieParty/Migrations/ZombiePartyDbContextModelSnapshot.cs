@@ -21,6 +21,34 @@ namespace ZombieParty.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HuntingLogZombie", b =>
+                {
+                    b.Property<int>("HuntingLogsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ZombiesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HuntingLogsId", "ZombiesId");
+
+                    b.HasIndex("ZombiesId");
+
+                    b.ToTable("HuntingLogZombie");
+                });
+
+            modelBuilder.Entity("ZombieParty.Models.HuntingLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HuntingLogs");
+                });
+
             modelBuilder.Entity("ZombieParty.Models.Zombie", b =>
                 {
                     b.Property<int>("Id")
@@ -70,6 +98,21 @@ namespace ZombieParty.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ZombieTypes");
+                });
+
+            modelBuilder.Entity("HuntingLogZombie", b =>
+                {
+                    b.HasOne("ZombieParty.Models.HuntingLog", null)
+                        .WithMany()
+                        .HasForeignKey("HuntingLogsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZombieParty.Models.Zombie", null)
+                        .WithMany()
+                        .HasForeignKey("ZombiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ZombieParty.Models.Zombie", b =>

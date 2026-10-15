@@ -31,5 +31,7 @@ namespace ZombieParty.Models
         [StringLength(255,ErrorMessage = "{0} cannot exceed {1} characters.")]
         public string? ShortDesc { get; set; }
 
+        public List<HuntingLog> HuntingLogs { get; set; } = new();
+
     }
 }

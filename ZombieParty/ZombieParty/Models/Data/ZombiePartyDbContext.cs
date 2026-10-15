@@ -15,6 +15,7 @@ namespace ZombieParty.Models.Data
         public DbSet<Zombie> Zombies { get; set; } //indique à Entity Framework Core que tu veux gérer les zombies dans une table appelée Zombies.
         public DbSet<ZombieType> ZombieTypes { get; set; }//Indique à Entity Framework Core que tu veux gérer les types de zombies dans une table appelée ZombieTypes.
 
+        public DbSet<HuntingLog> HuntingLogs { get; set; }
         //DONC LA TABLE ZOMBIES ET ZOMBIETYPE SONT CREE
     }
 }
